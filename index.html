@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10233f" />
+  <title>Daniel Aufgaben Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Persönliches Aufgaben-System</p>
+      <h1>Aufgaben Dashboard</h1>
+      <p class="subtitle">Job, Privat, Hochzeit & POP ART KIDS – alles an einem Ort.</p>
+    </div>
+    <div class="header-actions">
+      <button id="exportBtn" class="btn ghost">Backup exportieren</button>
+      <label class="btn ghost file-label">
+        Backup importieren
+        <input id="importInput" type="file" accept="application/json" hidden />
+      </label>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-grid">
+      <article class="card stat-card">
+        <span class="stat-label">Offene Aufgaben</span>
+        <strong id="openCount" class="stat-value">0</strong>
+        <span id="openHint" class="stat-hint">Bereit zum Abarbeiten.</span>
+      </article>
+      <article class="card stat-card urgent">
+        <span class="stat-label">Dringend / P1</span>
+        <strong id="urgentCount" class="stat-value">0</strong>
+        <span class="stat-hint">Heute zuerst.</span>
+      </article>
+      <article class="card stat-card money">
+        <span class="stat-label">Offene Zahlungen</span>
+        <strong id="paymentTotal" class="stat-value">0 €</strong>
+        <span id="paymentHint" class="stat-hint">Noch zu zahlen.</span>
+      </article>
+      <article class="card stat-card success">
+        <span class="stat-label">Erledigt</span>
+        <strong id="doneCount" class="stat-value">0</strong>
+        <span id="streakHint" class="stat-hint">Dein Fortschritt zählt.</span>
+      </article>
+    </section>
+
+    <section class="card motivation-card">
+      <div>
+        <p class="eyebrow">Motivation</p>
+        <h2 id="motivationTitle">Heute zählt nur der nächste Schritt.</h2>
+        <p id="motivationText">Kleine abgeschlossene Aufgaben schlagen lange offene Listen.</p>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span>Gesamtfortschritt</span>
+          <strong id="progressPercent">0%</strong>
+        </div>
+        <div class="progress-track">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout-two">
+      <article class="card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Neu</p>
+            <h2>Aufgabe anlegen</h2>
+          </div>
+        </div>
+        <form id="taskForm" class="form-grid">
+          <label>Aufgabe<input id="taskTitle" required placeholder="z. B. Stiftungsliste fertigstellen" /></label>
+          <label>Bereich<select id="taskArea"><option>Business / POP ART KIDS</option><option>Finanzen</option><option>Hochzeit</option><option>Wohnung & Mietrecht</option><option>Auto & Versicherung</option><option>Haushalt</option><option>Einkäufe & Erledigungen</option><option>Job</option><option>Sonstiges</option></select></label>
+          <label>Priorität<select id="taskPriority"><option value="P1">P1 – Sofort</option><option value="P2" selected>P2 – Hoch</option><option value="P3">P3 – Mittel</option><option value="P4">P4 – Niedrig</option></select></label>
+          <label>Fälligkeit<input id="taskDue" type="date" /></label>
+          <label>Aufwand (Std.)<input id="taskHours" type="number" min="0" step="0.25" placeholder="1.5" /></label>
+          <label>Verantwortlich<select id="taskOwner"><option>Daniel</option><option>Darina</option><option>Gemeinsam</option></select></label>
+          <label class="full">Nächster Schritt / Notiz<textarea id="taskNote" rows="3" placeholder="Was ist konkret als Nächstes zu tun?"></textarea></label>
+          <button class="btn primary full" type="submit">Aufgabe hinzufügen</button>
+        </form>
+      </article>
+      <article class="card">
+        <div class="section-head"><div><p class="eyebrow">Geld</p><h2>Dringende Zahlung</h2></div></div>
+        <form id="paymentForm" class="form-grid">
+          <label>Zahlung<input id="paymentTitle" required placeholder="z. B. Versicherung" /></label>
+          <label>Betrag €<input id="paymentAmount" type="number" min="0" step="0.01" required placeholder="730" /></label>
+          <label>Fällig am<input id="paymentDue" type="date" /></label>
+          <label>Priorität<select id="paymentPriority"><option value="P1">P1 – Sofort</option><option value="P2" selected>P2 – Hoch</option><option value="P3">P3 – Mittel</option></select></label>
+          <label class="full">Notiz<textarea id="paymentNote" rows="3" placeholder="z. B. Terminüberweisung einrichten"></textarea></label>
+          <button class="btn danger full" type="submit">Zahlung hinzufügen</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="section-head responsive">
+        <div><p class="eyebrow">Fokus</p><h2>Aktive Aufgaben</h2></div>
+        <div class="filters">
+          <select id="filterArea"><option value="all">Alle Bereiche</option></select>
+          <select id="filterPriority"><option value="all">Alle Prioritäten</option><option value="P1">P1 – Sofort</option><option value="P2">P2 – Hoch</option><option value="P3">P3 – Mittel</option><option value="P4">P4 – Niedrig</option></select>
+          <select id="filterOwner"><option value="all">Alle Verantwortlichen</option><option>Daniel</option><option>Darina</option><option>Gemeinsam</option></select>
+        </div>
+      </div>
+      <div id="taskList" class="item-list"></div>
+    </section>
+
+    <section class="layout-two">
+      <article class="card"><div class="section-head"><div><p class="eyebrow">Finanzen</p><h2>Offene Zahlungen</h2></div></div><div id="paymentList" class="item-list"></div></article>
+      <article class="card"><div class="section-head"><div><p class="eyebrow">Erfolge</p><h2>Zuletzt erledigt</h2></div></div><div id="historyList" class="history-list"></div></article>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><div><p class="eyebrow">Wochensteuerung</p><h2>Deine realistische Kapazität</h2></div></div>
+      <div class="capacity-grid"><div><strong>Mo–Do</strong><span>1–1,5 h pro Abend</span></div><div><strong>Freitag</strong><span>2–2,5 h Admin / Follow-ups</span></div><div><strong>Samstag</strong><span>4–5 h Deep Work</span></div><div><strong>Sonntag</strong><span>Puffer / kurze Pflichtpunkte</span></div></div>
+      <div class="week-plan" id="weekPlan"></div>
+    </section>
+  </main>
+
+  <dialog id="editDialog"><form id="editForm" method="dialog" class="dialog-card"><h2>Aufgabe bearbeiten</h2><input type="hidden" id="editId" /><label>Aufgabe<input id="editTitle" required /></label><label>Priorität<select id="editPriority"><option value="P1">P1 – Sofort</option><option value="P2">P2 – Hoch</option><option value="P3">P3 – Mittel</option><option value="P4">P4 – Niedrig</option></select></label><label>Fälligkeit<input id="editDue" type="date" /></label><label>Notiz<textarea id="editNote" rows="4"></textarea></label><div class="dialog-actions"><button type="button" class="btn ghost" id="cancelEdit">Abbrechen</button><button type="submit" class="btn primary">Speichern</button></div></form></dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
