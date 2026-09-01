@@ -1,0 +1,11 @@
+{
+  "name": "Krassowski Aufgaben Dashboard",
+  "short_name": "Aufgaben",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fb",
+  "theme_color": "#10233f",
+  "lang": "de-DE",
+  "description": "Geschütztes gemeinsames Aufgaben-Dashboard der Familie Krassowski"
+}
