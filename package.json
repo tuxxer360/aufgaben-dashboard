@@ -1,0 +1,18 @@
+{
+  "name": "krassowski-aufgaben-dashboard",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "build:ios-web": "rm -rf dist && mkdir -p dist && cp index.html app.js styles.css config.js manifest.webmanifest sw.js dist/",
+    "cap:add:ios": "npx cap add ios",
+    "cap:sync": "npx cap sync ios",
+    "cap:open": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/ios": "^7.4.3"
+  }
+}
