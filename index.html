@@ -1,1 +1,162 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10233f"><title>Daniel Aufgaben Dashboard</title><link rel="stylesheet" href="styles.css"></head><body><header class="app-header"><div><p class="eyebrow">Master Aufgaben-System</p><h1>Aufgaben Dashboard</h1><p class="subtitle">Alle Aufgaben, Fristen, Zahlungen und Prioritäten an einem Ort.</p></div><div class="header-actions"><button id="exportBtn" class="btn ghost">Backup exportieren</button><label class="btn ghost file-label">Backup importieren<input id="importInput" type="file" accept="application/json" hidden></label><button id="resetBtn" class="btn ghost">Masterstand neu laden</button></div></header><main class="container"><section class="hero-grid"><article class="card stat-card"><span class="stat-label">Offene Aufgaben</span><strong id="openCount" class="stat-value">0</strong><span class="stat-hint">Gesamt</span></article><article class="card stat-card urgent"><span class="stat-label">Dringend / P1</span><strong id="urgentCount" class="stat-value">0</strong><span class="stat-hint">Zuerst erledigen</span></article><article class="card stat-card money"><span class="stat-label">Offene Beträge</span><strong id="paymentTotal" class="stat-value">0 €</strong><span class="stat-hint">Aus Aufgaben mit Betrag</span></article><article class="card stat-card success"><span class="stat-label">Erledigt</span><strong id="doneCount" class="stat-value">0</strong><span id="progressPercent" class="stat-hint">0%</span></article></section><section class="layout-two"><article class="card"><div class="section-head"><div><p class="eyebrow">Neu</p><h2>Aufgabe anlegen</h2></div></div><form id="taskForm" class="form-grid"><label>Aufgabe<input id="taskTitle" required></label><label>Bereich<input id="taskArea" list="areas" required></label><label>Priorität<select id="taskPriority"><option value="P1">P1 – Sofort</option><option value="P2" selected>P2 – Hoch</option><option value="P3">P3 – Mittel</option><option value="P4">P4 – Niedrig</option></select></label><label>Status<select id="taskStatus"><option value="open">Offen</option><option value="progress">In Arbeit</option><option value="waiting">Warten</option><option value="done">Erledigt</option></select></label><label>Fälligkeit<input id="taskDue" type="date"></label><label>Betrag €<input id="taskAmount" type="number" step="0.01"></label><label>Verantwortlich<select id="taskOwner"><option>Daniel</option><option>Darina</option><option>Gemeinsam</option></select></label><label>Aufwand Std.<input id="taskHours" type="number" min="0" step="0.25"></label><label>Zeithorizont<input id="taskHorizon"></label><label>Planwoche<input id="taskPlanWeek"></label><label>Arbeitsblock<input id="taskWorkBlock"></label><label class="full">Nächster Schritt<textarea id="taskNextStep" rows="2"></textarea></label><label class="full">Notiz / Kontext<textarea id="taskNote" rows="3"></textarea></label><button class="btn primary full" type="submit">Aufgabe hinzufügen</button></form></article><article class="card"><p class="eyebrow">Steuerung</p><h2>Filter & Sortierung</h2><div class="form-grid"><label class="full">Suche<input id="searchText" placeholder="Aufgabe, Notiz, nächster Schritt …"></label><label>Bereich<select id="filterArea"><option value="all">Alle Bereiche</option></select></label><label>Priorität<select id="filterPriority"><option value="all">Alle Prioritäten</option><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select></label><label>Status<select id="filterStatus"><option value="active">Alle aktiven</option><option value="all">Alle</option><option value="open">Offen</option><option value="progress">In Arbeit</option><option value="waiting">Warten</option><option value="done">Erledigt</option></select></label><label>Verantwortlich<select id="filterOwner"><option value="all">Alle</option><option>Daniel</option><option>Darina</option><option>Gemeinsam</option></select></label><label>Sortieren<select id="sortBy"><option value="priority">Priorität + Fälligkeit</option><option value="due">Fälligkeit</option><option value="title">Aufgabe A–Z</option><option value="area">Bereich A–Z</option><option value="status">Status</option><option value="amount">Betrag absteigend</option></select></label></div><div style="margin-top:18px"><strong id="resultCount">0</strong> Treffer</div><p class="item-note">Änderungen werden auf diesem Gerät automatisch gespeichert. Über Backup exportieren/importieren kannst du sie zwischen Geräten übertragen.</p></article></section><section class="card" style="margin-top:18px"><div class="section-head responsive"><div><p class="eyebrow">Masterliste</p><h2>Aufgaben</h2></div></div><div id="taskList" class="item-list"></div></section></main><datalist id="areas"></datalist><dialog id="editDialog"><form id="editForm" method="dialog" class="dialog-card"><h2>Aufgabe bearbeiten</h2><input type="hidden" id="editId"><label>Aufgabe<input id="editTitle" required></label><label>Bereich<input id="editArea" list="areas"></label><label>Priorität<select id="editPriority"><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select></label><label>Status<select id="editStatus"><option value="open">Offen</option><option value="progress">In Arbeit</option><option value="waiting">Warten</option><option value="done">Erledigt</option></select></label><label>Fälligkeit<input id="editDue" type="date"></label><label>Betrag €<input id="editAmount" type="number" step="0.01"></label><label>Verantwortlich<select id="editOwner"><option>Daniel</option><option>Darina</option><option>Gemeinsam</option></select></label><label>Aufwand Std.<input id="editHours" type="number" step="0.25"></label><label>Zeithorizont<input id="editHorizon"></label><label>Planwoche<input id="editPlanWeek"></label><label>Arbeitsblock<input id="editWorkBlock"></label><label>Nächster Schritt<textarea id="editNextStep" rows="2"></textarea></label><label>Notiz<textarea id="editNote" rows="3"></textarea></label><div class="dialog-actions"><button type="button" class="btn ghost" id="cancelEdit">Abbrechen</button><button type="submit" class="btn primary">Speichern</button></div></form></dialog><script src="data-a.js"></script><script src="data-b.js"></script><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#10233f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Aufgaben" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>Krassowski Aufgaben Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section id="authView" class="auth-shell">
+    <div class="auth-card">
+      <p class="eyebrow">Familie Krassowski</p>
+      <h1>Aufgaben Dashboard</h1>
+      <p class="muted">Geschützter Zugriff auf eure gemeinsame Aufgabenliste.</p>
+      <button id="appleLoginBtn" class="btn apple" type="button"> Mit Apple anmelden</button>
+      <div class="divider"><span>oder</span></div>
+      <form id="emailAuthForm" class="stack">
+        <label>E-Mail<input id="authEmail" type="email" autocomplete="email" required placeholder="name@beispiel.de" /></label>
+        <label>Passwort<input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="Mindestens 8 Zeichen" /></label>
+        <div class="button-row">
+          <button class="btn primary" type="submit" data-action="login">Anmelden</button>
+          <button class="btn ghost" id="signupBtn" type="button">Registrieren</button>
+        </div>
+      </form>
+      <p id="authMessage" class="message"></p>
+      <p class="fineprint">Nur freigegebene Familienmitglieder können die Aufgaben sehen. Neue Konten landen zunächst in der Zugriffsprüfung.</p>
+    </div>
+  </section>
+
+  <section id="pendingView" class="auth-shell hidden">
+    <div class="auth-card">
+      <p class="eyebrow">Zugriff ausstehend</p>
+      <h2>Dein Konto ist angemeldet.</h2>
+      <p class="muted">Ein Administrator muss den Zugriff auf „Familie Krassowski“ noch freigeben.</p>
+      <button id="pendingLogoutBtn" class="btn ghost">Abmelden</button>
+    </div>
+  </section>
+
+  <div id="appView" class="hidden">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Familie Krassowski</p>
+        <h1>Aufgaben Dashboard</h1>
+        <p class="subtitle">Gemeinsam, synchronisiert und geschützt.</p>
+      </div>
+      <div class="header-actions">
+        <span id="currentUser" class="user-chip"></span>
+        <button id="adminNavBtn" class="btn header-btn hidden">Administration</button>
+        <button id="tasksNavBtn" class="btn header-btn hidden">Aufgaben</button>
+        <button id="logoutBtn" class="btn header-btn">Abmelden</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="tasksSection">
+        <section class="hero-grid">
+          <article class="card stat-card"><span class="stat-label">Offene Aufgaben</span><strong id="openCount" class="stat-value">0</strong><span class="stat-hint">Noch zu erledigen</span></article>
+          <article class="card stat-card urgent"><span class="stat-label">Dringend / P1</span><strong id="urgentCount" class="stat-value">0</strong><span class="stat-hint">Zuerst bearbeiten</span></article>
+          <article class="card stat-card money"><span class="stat-label">Offene Beträge</span><strong id="paymentTotal" class="stat-value">0 €</strong><span class="stat-hint">Auf offenen Aufgaben</span></article>
+          <article class="card stat-card success"><span class="stat-label">Erledigt</span><strong id="doneCount" class="stat-value">0</strong><span class="stat-hint">Gesamtfortschritt</span></article>
+        </section>
+
+        <section class="card toolbar-card">
+          <div class="toolbar-grid">
+            <input id="searchInput" placeholder="Aufgaben durchsuchen …" />
+            <select id="filterArea"><option value="all">Alle Bereiche</option></select>
+            <select id="filterPriority"><option value="all">Alle Prioritäten</option><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select>
+            <select id="filterStatus"><option value="all">Alle Status</option><option value="open">Offen</option><option value="progress">In Arbeit</option><option value="waiting">Warten</option><option value="done">Erledigt</option></select>
+            <select id="filterOwner"><option value="all">Alle Verantwortlichen</option></select>
+            <select id="sortBy"><option value="priority">Priorität</option><option value="due">Fälligkeit</option><option value="title">Aufgabe</option><option value="area">Bereich</option><option value="status">Status</option><option value="amount">Betrag</option></select>
+            <button id="newTaskBtn" class="btn primary">+ Neue Aufgabe</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head responsive"><div><p class="eyebrow">Masterliste</p><h2>Aufgaben</h2></div><span id="resultCount" class="muted"></span></div>
+          <div id="taskList" class="item-list"></div>
+        </section>
+      </section>
+
+      <section id="adminSection" class="hidden">
+        <section class="card">
+          <div class="section-head"><div><p class="eyebrow">Administration</p><h2>Zugriff & Einstellungen</h2></div></div>
+          <div class="admin-grid">
+            <div class="admin-panel">
+              <h3>Zugriffsanfragen</h3>
+              <div id="requestList" class="item-list"></div>
+            </div>
+            <div class="admin-panel">
+              <h3>Mitglieder</h3>
+              <div id="memberList" class="item-list"></div>
+            </div>
+            <div class="admin-panel">
+              <h3>Person einladen</h3>
+              <form id="inviteForm" class="stack">
+                <label>E-Mail<input id="inviteEmail" type="email" required /></label>
+                <label>Rolle<select id="inviteRole"><option value="member">Mitglied</option><option value="admin">Administrator</option></select></label>
+                <button class="btn primary" type="submit">Einladung vormerken</button>
+              </form>
+              <p class="fineprint">Bei Apple „E-Mail verbergen“ kann eine Relay-Adresse verwendet werden. Alternativ nach der ersten Anmeldung die Zugriffsanfrage hier freigeben.</p>
+            </div>
+            <div class="admin-panel">
+              <h3>E-Mail-Erinnerungen</h3>
+              <form id="settingsForm" class="stack">
+                <label class="check-row"><input id="emailReminders" type="checkbox" /> Erinnerungen aktiv</label>
+                <label>Zieladresse<input id="reminderEmail" type="email" required /></label>
+                <label>Uhrzeit<select id="reminderHour"></select></label>
+                <button class="btn primary" type="submit">Einstellungen speichern</button>
+              </form>
+              <p id="reminderStatus" class="fineprint"></p>
+            </div>
+            <div class="admin-panel">
+              <h3>Daten & Sicherheit</h3>
+              <div class="button-column">
+                <button id="exportBtn" class="btn ghost">Aufgaben als JSON exportieren</button>
+              </div>
+              <p class="fineprint">Aufgabendaten liegen in Supabase und werden per Row Level Security geschützt. Im GitHub-Code werden keine Aufgaben mehr als Seed ausgeliefert.</p>
+            </div>
+            <div class="admin-panel">
+              <h3>Apple App</h3>
+              <p class="muted">Die Web-App ist als installierbare PWA vorbereitet. Zusätzlich liegt im Repository eine Capacitor-Konfiguration für eine spätere native iOS-App.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="taskDialog">
+    <form id="taskForm" method="dialog" class="dialog-card wide-dialog">
+      <div class="section-head"><h2 id="dialogTitle">Aufgabe bearbeiten</h2><button id="closeDialogBtn" type="button" class="icon-btn">✕</button></div>
+      <input id="taskId" type="hidden" />
+      <div class="form-grid">
+        <label class="full">Aufgabe<input id="taskTitle" required /></label>
+        <label>Bereich<input id="taskArea" required /></label>
+        <label>Priorität<select id="taskPriority"><option>P1</option><option>P2</option><option selected>P3</option><option>P4</option></select></label>
+        <label>Status<select id="taskStatus"><option value="open">Offen</option><option value="progress">In Arbeit</option><option value="waiting">Warten</option><option value="done">Erledigt</option></select></label>
+        <label>Fälligkeit<input id="taskDue" type="date" /></label>
+        <label>Betrag €<input id="taskAmount" type="number" min="0" step="0.01" /></label>
+        <label>Verantwortlich<input id="taskOwner" /></label>
+        <label>Aufwand Std.<input id="taskHours" type="number" min="0" step="0.25" /></label>
+        <label>Zeithorizont<input id="taskHorizon" /></label>
+        <label>Planwoche<input id="taskPlanWeek" /></label>
+        <label>Arbeitsblock<input id="taskWorkBlock" /></label>
+        <label class="check-row"><input id="taskReminder" type="checkbox" checked /> E-Mail-Erinnerung bei Fälligkeit</label>
+        <label class="full">Nächster Schritt<textarea id="taskNextStep" rows="3"></textarea></label>
+        <label class="full">Notiz / Kontext<textarea id="taskNote" rows="4"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button id="deleteTaskBtn" type="button" class="btn danger hidden">Löschen</button><span class="spacer"></span><button id="cancelTaskBtn" type="button" class="btn ghost">Abbrechen</button><button type="submit" class="btn primary">Speichern</button></div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
